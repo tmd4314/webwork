@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <table id="app">
+    <tr v-for = "(item, idx) in items">
+      <td>{{idx + 1}}</td>
+      <td>{{item.firstName}}</td>
+      <td>{{item.dept}}</td>
+      <td>{{item.sal}}</td>
+    </tr>
+  </table>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script>
+    Vue.createApp({
+      data() {
+        return {
+          items: [{firstName: "홍길동", dept:"네트워크 개발", sal:2000},
+                  {firstName: "박길동", dept:"백엔드 개발", sal:20000},
+                  {firstName: "이길동", dept:"프론트엔드 개발", sal:15000},
+                ]
+        };
+      }
+    }).mount("#app");
+    
+  </script>
+</body>
+</html>

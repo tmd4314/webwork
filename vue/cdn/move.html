@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>영화</title>
+</head>
+
+<body>
+  <div id="app">
+    <input v-model="targetDt"@keydown.enter="seeMove()"><button @click="seeMove()">조회</button>
+    <table border="1">
+      <th>번호</th>
+      <th>제목</th>
+      <th>개봉일</th>
+      <tr v-for="todo in todos">
+        <td>{{ todo.rnum }}</td>
+        <td>{{ todo.movieNm }}</td>
+        <td>{{ todo.openDt}}</td>
+      </tr>
+    </table>
+  </div>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script>
+    Vue.createApp({
+      data: function () {
+        return {
+          targetDt: '20250423',
+          todos: [],  
+        }
+      },
+      methods: { 
+        seeMove(){
+          fetch('http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=12664b24453335d2c3eca0fdc4b3b013&targetDt='+ this.targetDt)
+          .then(response => response.json())
+          .then(response => this.todos = response.boxOfficeResult.dailyBoxOfficeList)
+        } 
+      },
+      mounted() {
+        this.seeMove();
+      }
+    }).mount("#app");
+    
+  </script>
+</body>
+
+</html>
