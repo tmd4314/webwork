@@ -4,7 +4,8 @@ import MemberForm from '../views/MemberForm.vue'
 import Emp from '../views/Emp.vue';
 import Todo from '../views/Todo.vue';
 import Movie from '../views/Movie.vue';
-import Param from '../views/ParamView.vue'
+import Param from '../views/ParamView.vue';
+import EmpView from '../views/EmpView.vue';
 
 const routes = [
   { path: '/', component: HelloWorld },
@@ -12,7 +13,8 @@ const routes = [
   { path: '/emp', component: Emp },
   { path: '/movie', component: Movie },
   { path: '/todo', component: Todo },
-  { path: '/param/:username', component: Param }
+  { path: '/param/:username', component: Param },
+  { path: '/empView', component: EmpView },
 ]
 
 const router = createRouter({

@@ -60,8 +60,13 @@ import { RouterLink, RouterView } from 'vue-router';
             <li class="nav-item">
               <RouterLink to="/param/Kim" class="nav-link" aria-current="page">Param1</RouterLink>
             </li>
+
             <li class="nav-item">
               <RouterLink to="/param/Min" class="nav-link" aria-current="page">Param2</RouterLink>
+            </li>
+
+            <li class="nav-item">
+              <RouterLink to="/empView" class="nav-link" aria-current="page">empView</RouterLink>
             </li>
            
           </ul>
