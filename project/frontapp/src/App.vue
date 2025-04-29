@@ -11,11 +11,7 @@ import HelloWorld from './components/HelloWorld.vue'
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
-        <RouterLink to="/emp">사원</RouterLink>
-        <RouterLink to="/todo">리스트</RouterLink>
-        <RouterLink to="/slot">슬롯</RouterLink>
-        <!-- <RouterLink to="/nested">컴포넌트안에 다른 컴포넌트 사용</RouterLink>
-        <RouterLink to="/parnet">부모자식컴포넌트</RouterLink> -->
+        <RouterLink to="/list">목록</RouterLink>
       </nav>
     </div>
   </header>
