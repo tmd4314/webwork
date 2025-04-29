@@ -85,7 +85,7 @@ let data = [
               "job_id": "it"
             },
             {
-              "id": "",
+              "id": "10",
               "first_name": "유미",
               "last_name": "김",
               "job_id": "it",
@@ -94,7 +94,7 @@ let data = [
               "email": "a@a.a"
             },
             {
-              "id": 11,
+              "id": "11",
               "first_name": "aa",
               "last_name": "aa",
               "email": "a@a.a",
@@ -107,7 +107,7 @@ let data = [
               "department_id": 10
             },
             {
-              "id": 12,
+              "id": "12",
               "first_name": "bb",
               "last_name": "bb",
               "email": "a@a.a",
@@ -127,17 +127,20 @@ app.get('/emp', (req, res) => {
 
 // 부서가 10번인 첫번째 사원
 app.get('/find', (req, res) => {
-  res.send('cart hello!')
+  const result = data.find(emp => emp.department_id === 10);
+  res.send(result);
 })
 
 // job_id가 'it'인 사원만 조회
 app.get('/filter', (req, res) => {
-  res.send('hello!')
+  const result = data.filter(emp => emp.job_id === 'it');
+  res.send(result);
 })
 
 //first_name 순으로 정렬
 app.get('/sort', (req, res) => {
-  res.send('hello!')
+  const result = [...data].sort((a, b) => a.first_name.localeCompare(b.first_name));
+  res.send(result);
 })
 
 app.get('/', (req, res) => {
