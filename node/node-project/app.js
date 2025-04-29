@@ -127,13 +127,13 @@ app.get('/emp', (req, res) => {
 
 // 부서가 10번인 첫번째 사원
 app.get('/find', (req, res) => {
-  const result = data.find(emp => emp.department_id === 10);
+  const result = data.find(emp => emp.department_id == 10);
   res.send(result);
 })
 
 // job_id가 'it'인 사원만 조회
 app.get('/filter', (req, res) => {
-  const result = data.filter(emp => emp.job_id === 'it');
+  const result = data.filter(emp => emp.job_id == 'it');
   res.send(result);
 })
 
