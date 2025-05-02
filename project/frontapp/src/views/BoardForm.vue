@@ -17,8 +17,11 @@
         v-model="board.content"
       ></textarea>
 
-      <label for="regdate">작성일자</label>
-      <input type="text" v-model="board.created_date" readonly />
+      <div v-if="this.id > 0">
+        <label for="regdate">작성일자</label>
+        <input type="text" :value="dateFormat" readonly />
+      </div>
+      
 
       <button
         type="button"
@@ -44,16 +47,24 @@
         this.fetchInfo();
       }
     },
+    computed: {
+      dateFormat(){
+        const date = new Date(this.board.create_date);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');  // 0~11 이므로 +1
+        const day = String(date.getDate()).padStart(2, '0');
+        const hour = String(date.getHours()).padStart(2, '0');  // 로컬 기준으로 가져옴
+        const minute = String(date.getMinutes()).padStart(2, '0');
+
+        return `${year}-${month}-${day} ${hour}:${minute}`;
+      }
+    },
     methods: {
      async fetchInfo() {
         let board = await axios.get(`http://localhost:3000/board/${this.id}`)
-        this.board = board.data;
+        this.board = board.data[0];
       },
       async insertOrUpdate() {
-        const now = new Date();
-        const formattedDate = now.toISOString();  
-        this.board.created_date = formattedDate;
-
         if(this.id){
           let update = await axios.put(`http://localhost:3000/board/${this.id}`, this.board)
           alert("정상적으로 수정되었습니다.");

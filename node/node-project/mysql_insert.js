@@ -1,32 +1,15 @@
 // mysql 모듈 로드 
-const mysql = require("mysql2");  
+const pool = require("./mysql");  
  
-// mysql 접속 정보 
-const conn = { host: "127.0.0.1",  
-               port: "3306",  
-               user: "root",  
-               password: "admin",  
-               database: "shop"  }; 
- 
-// DB 커넥션 생성 
-let connection = mysql.createConnection(conn); 
 
-// 1. DB 접속 체크 (생략가능) 
-connection.connect((err) => { 
-  if (err) { 
-  console.log("error connection" + err.stack); 
-  return;  
-  } 
-  }); 
-  // 2. SQL 실행 
-  sql = "INSERT INTO customers (name, email, phone, address) " +
-  "VALUES ('이민승', '123@123', '010-123-123', '대구 수성구')";
-  connection.query(sql, function (err, results, fields) { 
-  if (err) {     
-  console.log(err);    
-  } 
-  // 3. 결과 처리 
-  console.log(results); 
-  }); 
-  // DB 접속 종료(비동기이지만 SQL이 모두 실행되면 종료) 
-  connection.end(); 
+// 2. SQL 실행 
+const data = { name: "이민식", email:"2@23.3", phone:"011-1234-1234"}
+sql = "INSERT customers (name, email, phone) values (?, ?, ?)";
+
+pool.query(sql, [ data.name, data.email, data.phone ], function (err, results, fields) { 
+if (err) {     
+console.log(err);    
+} 
+// 3. 결과 처리 
+console.log(results); 
+}); 

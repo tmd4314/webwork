@@ -15,8 +15,9 @@
           <td>{{ board.id }}</td>
           <td>{{ board.title }}</td>
           <td>{{ board.writer }}</td>
-          <td>{{ board.created_date }}</td>
-          <td>{{ board.comment }}</td>
+          <td>{{ formatDate(board.create_date) }}</td>
+          <td></td>
+          <!-- <td>{{ board.comment }}</td> -->
         </tr>
 
         <tr>
@@ -46,6 +47,7 @@
     methods : {
       async List(){
         let result = await axios.get("")
+        console.log(result.data);
         this.boards = result.data;
       },
       async infoHandler(id) {
@@ -53,6 +55,16 @@
       },
       async boardInsert(){
         this.$router.push({path: "/form"});
+      },
+      formatDate(dateStr) {
+        const date = new Date(dateStr);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const hour = String(date.getHours()).padStart(2, '0');
+        const minute = String(date.getMinutes()).padStart(2, '0');
+
+        return `${year}-${month}-${day} ${hour}:${minute}`;
       }
     }
   }

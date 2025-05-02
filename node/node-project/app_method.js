@@ -102,6 +102,7 @@ app.route("/emp")
 
 //Ruter를 이용하여 모듈(파일) 분리하여 리소스별로 라우트 지정
 app.use('/product', require('./routes/product'))
+app.use('/customer', require('./routes/customer'))
 app.use('/dept', require('./routes/dept'))
 
 app.listen(port, ()=>{

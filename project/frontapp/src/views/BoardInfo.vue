@@ -8,7 +8,7 @@
             <td scope="col" class="text-center">{{ board.id}}</td>
             <th scope="col" class="text-center table-primary">작성일</th>
             <td scope="col" class="text-center">
-              {{ board.created_date }}
+              {{ dateFormat }}
             </td>
             <th scope="col" class="text-center table-primary">이름</th>
             <td scope="col" class="text-center">{{ board.writer }}</td>
@@ -35,6 +35,10 @@
                 수정
               </button>
               <button
+                class="btn btn-xs btn-danger" @click="boardDelete(board.id)">
+                삭제
+              </button>
+              <button
                 class="btn btn-xs btn-warning" @click="goToList()">
                 목록
               </button>
@@ -45,46 +49,41 @@
     </div>
     <!-- 댓글 -->
     <div class="row">
-      <table>
-        <thead>
-          <tr>
-            <th>번호</th>
-            <th>작성자</th>
-            <th>작성내용</th>
-            <th>작성일</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="comment in comments">
-            <td>{{ comment.id }}</td>
-            <td>{{ comment.writer }}</td>
-            <td>{{ comment.content }}</td>
-            <td>{{ comment.created_date }}</td>
-          </tr>
-        </tbody>
-      </table>
-
+      <CommentComp v-if="board.id" :bid="board.id"/>
     </div>
   </div>
 </template>
 <script>
   import axios from 'axios';
+  import CommentComp from '../components/CommentComp.vue'
   export default{
+    components: {CommentComp},
     data() {
       return {
         board: {},
-        comments: []
       }
     },
     created() {
       this.id = this.$route.query.id;
       this.fetchInfo();
-      this.commentList();
+    },
+    computed: {
+      dateFormat(){
+        const date = new Date(this.board.create_date);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');  // 0~11 이므로 +1
+        const day = String(date.getDate()).padStart(2, '0');
+        const hour = String(date.getHours()).padStart(2, '0');  // 로컬 기준으로 가져옴
+        const minute = String(date.getMinutes()).padStart(2, '0');
+
+        return `${year}-${month}-${day} ${hour}:${minute}`;
+      }
     },
     methods: {
      async fetchInfo() {
         let board = await axios.get(`http://localhost:3000/board/${this.id}`)
-        this.board = board.data;
+        console.log(board.data);
+        this.board = board.data[0];
       },
       boardUpdate(id) {
         this.$router.push({path: "/form", query: {id: id}});
@@ -92,10 +91,29 @@
       goToList(){
         this.$router.push({path:"/list"});
       },
-      async commentList(id){
-        let comments = await axios.get(`http://localhost:3000/comment?bid=${this.id}`)
-        this.comments = comments.data;
+      async boardDelete(id){
+        if (!this.id) {
+          alert("삭제 실패했습니다.");
+          return;
+        }
+
+        // 사용자 확인창
+        const confirmed = confirm("정말 삭제하시겠습니까?");
+        if (!confirmed) {
+          // 취소 누르면 아무것도 하지 않음
+          return;
+        }
+
+        try {
+          await axios.delete(`http://localhost:3000/board/${this.id}`);
+          alert("정상적으로 삭제되었습니다.");
+          this.$router.push({ path: "/list" });
+        } catch (err) {
+          console.error(err);
+          alert("삭제 중 오류가 발생했습니다.");
+        }
       }
+     
     }
   }
 </script>
