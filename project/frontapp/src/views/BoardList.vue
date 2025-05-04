@@ -16,8 +16,7 @@
           <td>{{ board.title }}</td>
           <td>{{ board.writer }}</td>
           <td>{{ formatDate(board.create_date) }}</td>
-          <td></td>
-          <!-- <td>{{ board.comment }}</td> -->
+          <td>{{ countComment(board.id) }}</td>
         </tr>
 
         <tr>
@@ -38,17 +37,26 @@
   export default {
     data() {
       return {
-        boards: []
+        boards: [],
+        comments: []
       }
     },
     created() {
-      this.List()
+      this.List();
+      this.getAllComments();
     },
     methods : {
       async List(){
         let result = await axios.get("")
         console.log(result.data);
         this.boards = result.data;
+      },
+      async getAllComments() {
+        const res = await axios.get("http://localhost:3000/comment");
+        this.comments = res.data;
+      },
+      countComment(bid) {
+        return this.comments.filter(comment => comment.bid === bid).length;
       },
       async infoHandler(id) {
         this.$router.push({path: "/info", query: {id: id}});

@@ -49,6 +49,7 @@
     </div>
     <!-- 댓글 -->
     <div class="row">
+      <CommentForm v-if="board.id" :bid="board.id"/>
       <CommentComp v-if="board.id" :bid="board.id"/>
     </div>
   </div>
@@ -56,8 +57,9 @@
 <script>
   import axios from 'axios';
   import CommentComp from '../components/CommentComp.vue'
+  import CommentForm from '../components/CommentForm.vue'
   export default{
-    components: {CommentComp},
+    components: {CommentComp, CommentForm},
     data() {
       return {
         board: {},

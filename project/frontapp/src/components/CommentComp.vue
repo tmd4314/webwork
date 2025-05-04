@@ -7,7 +7,6 @@
         <th>작성내용</th>
         <th>삭제</th>
         <th>작성일</th>
-        <th>등록</th>
       </tr>
     </thead>
     <tbody>
@@ -17,7 +16,7 @@
         <td>{{ comment.content }}</td>
         <td>
           <button
-            class="btn btn-xs btn-danger" @click="boardDelete(board.id)">
+            class="btn btn-xs btn-danger" @click="commentDelete(comment.id)">
             삭제
           </button>
         </td>
@@ -26,15 +25,6 @@
       </tr>
     </tbody>
   </table>
-  <tr>
-    <td colspan="6" class="text-center">
-
-      <button
-        class="btn btn-xs btn-info" @click="commentInfo(board.id)">
-        등록
-      </button>
-    </td>
-  </tr>
 </template>
 <script>
 import axios from 'axios';
@@ -52,6 +42,19 @@ export default{
     async commentList(){
       let comments = await axios.get(`http://localhost:3000/comment/${this.bid}`)
       this.comments = comments.data;
+    },
+    async commentDelete(id) {
+      const confirmed = confirm("정말 이 댓글을 삭제하시겠습니까?");
+      if (!confirmed) return;
+
+      try {
+        await axios.delete(`http://localhost:3000/comment/${id}`);
+        alert("댓글이 삭제되었습니다.");
+        this.commentList(); // 삭제 후 목록 다시 불러오기
+      } catch (err) {
+        console.error(err);
+        alert("댓글 삭제 중 오류가 발생했습니다.");
+      }
     },
     formatDate(isoStr) {
       const date = new Date(isoStr);

@@ -1,4 +1,5 @@
 const commentsql = {
+  countList : "select * from comment",
   selectList : "SELECT * FROM comment WHERE bid = ?",
   insertInfo : "insert comment ( writer, content, bid, create_date) values (?, ?, ?, now())",
   selectInfo : "select * from comment where id = ?",
