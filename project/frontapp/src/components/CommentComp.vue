@@ -40,7 +40,7 @@ export default{
   },
   methods: {
     async commentList(){
-      let comments = await axios.get(`http://localhost:3000/comment/${this.bid}`)
+      let comments = await axios.get(`/api/comment/${this.bid}`)
       this.comments = comments.data;
     },
     async commentDelete(id) {
@@ -48,7 +48,7 @@ export default{
       if (!confirmed) return;
 
       try {
-        await axios.delete(`http://localhost:3000/comment/${id}`);
+        await axios.delete(`/api/comment/${id}`);
         alert("댓글이 삭제되었습니다.");
         this.commentList(); // 삭제 후 목록 다시 불러오기
       } catch (err) {

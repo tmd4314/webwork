@@ -23,23 +23,22 @@
 </div>
 </template>
 <script>
-     import axios from "axios";
-    axios.defaults.baseURL="http://localhost:3000/customer"
+    import axios from "axios";
     export default {
         data() {
-        return {
-            customers: []
-        }
+            return {
+                customers: []
+            }
         },
         created() {
-        this.customersList();
+            this.customersList();
         },
         methods : {
-        async customersList(){
-            let result = await axios.get("")
-            console.log(result.data);
-            this.customers = result.data;
-        }
+            async customersList(){
+                let result = await axios.get("/api/customer")
+                console.log(result.data);
+                this.customers = result.data;
+            }
         }
     }
 </script>

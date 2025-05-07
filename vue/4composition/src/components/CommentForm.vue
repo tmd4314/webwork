@@ -21,35 +21,39 @@
     </form>
 </div>
 </template>
-<script>
+<script setup>
   import axios from 'axios';
-  export default{
-    props: ['bid'],
-    data() {
-      return {
-        comment: {
-            writer: '',
-            content: ''
-        }
-      }
-    },
-    methods: {
-        async insertComment() {
-      try {
-        const payload = {
-          ...this.comment,
-          bid: this.bid
-        };
-        await axios.post(`/api/comment`, payload);
-        alert("정상적으로 등록되었습니다.");
-        this.$router.push({ path: "/list" });
-      } catch (err) {
-        console.error(err);
-        alert("댓글 등록 중 오류 발생");
-      }
+  import { ref,defineProps } from 'vue';
+  import { useRouter } from 'vue-router';
+
+  const router = useRouter();
+
+  const props = defineProps({
+    bid: {
+      type: [Number ],
+      required: true
     }
-  }
-  }
+  });
+
+  const comment = ref({
+    writer: '' ,
+    content: ''
+  });
+
+  const insertComment = async() => {
+    try {
+      const payload = {
+        ...comment.value,
+        bid: props.bid
+      };
+      await axios.post(`/api/comment`, payload);
+      alert("정상적으로 등록되었습니다.");
+      router.push({ path: "/list" });
+    } catch (err) {
+      console.error(err);
+      alert("댓글 등록 중 오류 발생");
+    }
+  };
 </script>
 <style scoped>
 /* Style inputs with type="text", select elements and textareas */

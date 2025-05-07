@@ -33,7 +33,6 @@
 </template>
 <script>
   import axios from "axios";
-  axios.defaults.baseURL="http://localhost:3000/board"
   export default {
     data() {
       return {
@@ -47,16 +46,16 @@
     },
     methods : {
       async List(){
-        let result = await axios.get("")
+        let result = await axios.get("/api/board")
         console.log(result.data);
         this.boards = result.data;
       },
       async getAllComments() {
-        const res = await axios.get("http://localhost:3000/comment");
+        const res = await axios.get("/api/comment");
         this.comments = res.data;
       },
       countComment(bid) {
-        return this.comments.filter(comment => comment.bid === bid).length;
+        return this.comments.filter(comment => comment.bid == bid).length;
       },
       async infoHandler(id) {
         this.$router.push({path: "/info", query: {id: id}});

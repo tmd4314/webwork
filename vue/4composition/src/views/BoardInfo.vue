@@ -54,68 +54,69 @@
     </div>
   </div>
 </template>
-<script>
+<script setup>
+  import { ref, computed, onMounted } from 'vue';
+  import { useRouter, useRoute } from 'vue-router';
   import axios from 'axios';
-  import CommentComp from '../components/CommentComp.vue'
-  import CommentForm from '../components/CommentForm.vue'
-  export default{
-    components: {CommentComp, CommentForm},
-    data() {
-      return {
-        board: {},
-      }
-    },
-    created() {
-      this.id = this.$route.query.id;
-      this.fetchInfo();
-    },
-    computed: {
-      dateFormat(){
-        const date = new Date(this.board.create_date);
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');  // 0~11 이므로 +1
-        const day = String(date.getDate()).padStart(2, '0');
-        const hour = String(date.getHours()).padStart(2, '0');  // 로컬 기준으로 가져옴
-        const minute = String(date.getMinutes()).padStart(2, '0');
+  import CommentComp from '../components/CommentComp.vue';
+  import CommentForm from '../components/CommentForm.vue';
 
-        return `${year}-${month}-${day} ${hour}:${minute}`;
-      }
-    },
-    methods: {
-     async fetchInfo() {
-        let board = await axios.get(`/api/board/${this.id}`)
-        console.log(board.data);
-        this.board = board.data[0];
-      },
-      boardUpdate(id) {
-        this.$router.push({path: "/form", query: {id: id}});
-      },
-      goToList(){
-        this.$router.push({path:"/list"});
-      },
-      async boardDelete(id){
-        if (!this.id) {
-          alert("삭제 실패했습니다.");
-          return;
-        }
+  const board =  ref({});
+  const router = useRouter();
+  const route = useRoute();
 
-        // 사용자 확인창
-        const confirmed = confirm("정말 삭제하시겠습니까?");
-        if (!confirmed) {
-          // 취소 누르면 아무것도 하지 않음
-          return;
-        }
 
-        try {
-          await axios.delete(`/api/board/${this.id}`);
-          alert("정상적으로 삭제되었습니다.");
-          this.$router.push({ path: "/list" });
-        } catch (err) {
-          console.error(err);
-          alert("삭제 중 오류가 발생했습니다.");
-        }
-      }
-     
+  const id = route.query.id;
+
+  const fetchInfo = async() => {
+    const res = await axios.get(`/api/board/${id}`)
+    console.log(res.data);
+    board.value = res.data[0];
+  };
+
+  const dateFormat = computed(() => {
+    const date = new Date(board.value.create_date);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');  // 0~11 이므로 +1
+    const day = String(date.getDate()).padStart(2, '0');
+    const hour = String(date.getHours()).padStart(2, '0');  // 로컬 기준으로 가져옴
+    const minute = String(date.getMinutes()).padStart(2, '0');
+
+    return `${year}-${month}-${day} ${hour}:${minute}`;
+  });
+
+  const boardUpdate = (id) => {
+    router.push({path: "/form", query: {id: id}});
+  };
+
+  const goToList = () => {
+    router.push({path:"/list"});
+  };
+  
+  const boardDelete = async(id) => {
+    if (!id) {
+      alert("삭제 실패했습니다.");
+      return;
+    }
+
+    // 사용자 확인창
+    const confirmed = confirm("정말 삭제하시겠습니까?");
+    if (!confirmed) {
+      // 취소 누르면 아무것도 하지 않음
+      return;
+    }
+
+    try {
+      await axios.delete(`/api/board/${id}`);
+      alert("정상적으로 삭제되었습니다.");
+      router.push({ path: "/list" });
+    } catch (err) {
+      console.error(err);
+      alert("삭제 중 오류가 발생했습니다.");
     }
   }
+
+onMounted(() => {
+  fetchInfo();
+});
 </script>
