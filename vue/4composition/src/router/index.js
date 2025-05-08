@@ -28,7 +28,27 @@ const router = createRouter({
       path: '/form',
       name: 'form',
       component: () => import('../views/BoardForm.vue'),
-    }
+    },
+    {
+      path: '/nested',
+      name: 'nested',
+      component: () => import('../views/NestedComponent.vue'),
+    },
+    {
+      path: '/components',
+      name: 'components',
+      component: () => import('../views/ComponentView.vue'),
+    },
+    {
+      path: '/provide',
+      name: 'provide',
+      component: () => import('../views/ProvideInject.vue'),
+    },
+    {
+      path: '/watch',
+      name: 'watch',
+      component: () => import('../views/WatchView.vue'),
+    },
   ],
 })
 

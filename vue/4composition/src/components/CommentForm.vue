@@ -30,7 +30,7 @@
 
   const props = defineProps({
     bid: {
-      type: [Number ],
+      type: [Number],
       required: true
     }
   });
