@@ -18,15 +18,13 @@
           <td>{{ book.book_title }}</td>
           <td>{{ formatDate(book.create_date) }}</td>
         </tr>
-        <tr>
-          <td colspan="6" class="text-center">
-            <button class="btn btn-xs btn-info" @click="bookInsert()">
-              등록
-            </button>
-          </td>
-        </tr>
       </tbody>
     </table>
+    <div colspan="6" class="text-center">
+      <button class="btn btn-xs btn-info" @click="bookInsert()">
+        등록
+      </button>
+    </div>
 
     <!-- Pagination Controls -->
     <div class="pagination-controls">
