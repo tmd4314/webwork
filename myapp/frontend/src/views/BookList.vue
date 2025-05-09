@@ -4,7 +4,7 @@
       <thead>
         <tr>
           <th>No.</th>
-          <th>이미지</th>
+          <th></th>
           <th>도서명</th>
           <th>출간일</th>
         </tr>

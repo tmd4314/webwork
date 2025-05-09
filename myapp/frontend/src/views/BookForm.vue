@@ -22,6 +22,13 @@
       <label for="page">페이지</label>
       <input type="text" id="page" v-model="book.page" />
 
+      <label for="content">책 소개</label>
+      <textarea
+        id="content"
+        style="height: 200px"
+        v-model="book.content"
+      ></textarea>
+
       <label for="img">이미지 업로드
         <!-- 수정 모드일 때 기존 이미지 표시 -->
         <div v-if="id && book.img">

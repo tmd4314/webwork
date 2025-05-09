@@ -1,58 +1,56 @@
 <template>
-  <div class="container">
+  <div class="container mt-3">
     <div class="row">
+      <!-- 이미지와 소개를 나란히 배치 -->
+      <div class="col-md-6">
+        <img v-if="imageUrl" :src="imageUrl" alt="Book Image" style="max-width:100%; height:100%;" />
+      </div>
+      <div class="col-md-6">
+        <h4>책 소개</h4>
+        <hr>
+        <pre
+          style="white-space: pre-wrap;
+            border: none;
+            background-color: white; ">{{ book.content }}</pre>
+      </div>
+    </div>
+
+    <div class="row mt-3">
       <table class="table table-bordered">
-        <thead>
+        <tbody>
           <tr>
-            <th scope="col" class="text-center table-primary">번호</th>
-            <td scope="col" class="text-center">{{ book.id}}</td>
-            <th scope="col" class="text-center table-primary">출간일</th>
-            <td scope="col" class="text-center">
-              {{ dateFormat }}
-            </td>
-            <th scope="col" class="text-center table-primary">저자</th>
-            <td scope="col" class="text-center">{{ book.writer }}</td>
+            <th class="text-center table-primary">번호</th>
+            <td class="text-center">{{ book.id }}</td>
+            <th class="text-center table-primary">출간일</th>
+            <td class="text-center">{{ dateFormat }}</td>
+            <th class="text-center table-primary">저자</th>
+            <td class="text-center">{{ book.writer }}</td>
           </tr>
 
           <tr>
             <th colspan="2" class="text-center table-primary">제목</th>
             <td colspan="2">{{ book.book_title }}</td>
-            <th  class="text-center table-primary">페이지</th>
-            <td class="text-center" colspan="2">{{ book.page }}</td>
+            <th class="text-center table-primary">페이지</th>
+            <td class="text-center">{{ book.page }}</td>
           </tr>
           <tr>
-            <th colspan="2" class="text-center table-primary">isbn</th>
-            <td colspan="4">{{ book.isbn}}</td>
+            <th colspan="2" class="text-center table-primary">ISBN</th>
+            <td colspan="4">{{ book.isbn }}</td>
           </tr>
 
           <tr>
             <th colspan="2" class="text-center table-primary">출판사</th>
-            <td colspan="2">{{ book.publisher}}</td>
+            <td colspan="2">{{ book.publisher }}</td>
             <th class="text-center table-primary">가격</th>
-            <td colspan="2" class="text-center">{{ book.price}}</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td colspan="6" class="text-center" valign="top" height="200">
-              <img v-if="imageUrl" :src="imageUrl" alt="Book Image" style="max-width:800px; max-height:800px;" />
-            </td>
-          </tr>
-          <tr>
-            <td colspan="6" class="text-center">
-              <button
-                class="btn btn-xs btn-info" @click="UpdateBook(book.id)">
-                수정
-              </button>
-
-              <button
-                class="btn btn-xs btn-warning" @click="goToList()">
-                목록
-              </button>
-            </td>
+            <td class="text-center">{{ book.price }}</td>
           </tr>
         </tbody>
       </table>
+    </div>
+
+    <div class="text-center">
+      <button class="btn btn-info btn-sm" @click="UpdateBook(book.id)">수정</button>
+      <button class="btn btn-warning btn-sm" @click="goToList()">목록</button>
     </div>
   </div>
 </template>

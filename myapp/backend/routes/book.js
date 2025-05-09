@@ -35,6 +35,7 @@ router.post("", upload.single('file'), async (req, res) => {
     data.book_title,
     data.isbn,
     data.writer,
+    data.content,
     data.price,
     imgFilename,
     data.publisher,
