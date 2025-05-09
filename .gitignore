@@ -14,7 +14,7 @@ dist/
 dist-ssr
 coverage
 *.local
-.env
+mysql.env
 
 
 /cypress/videos/

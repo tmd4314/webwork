@@ -18,6 +18,7 @@ import HelloWorld from './components/HelloWorld.vue'
         <RouterLink to="/components">component</RouterLink>
         <RouterLink to="/provide">provide</RouterLink>
         <RouterLink to="/watch">watch</RouterLink>
+        <RouterLink to="/store">store</RouterLink>
       </nav>
     </div>
   </header>
