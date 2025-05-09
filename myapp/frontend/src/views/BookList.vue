@@ -22,7 +22,7 @@
     </table>
     <div colspan="6" class="text-center">
       <button class="btn btn-xs btn-info" @click="bookInsert()">
-        등록
+        도서 등록
       </button>
     </div>
 
